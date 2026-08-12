@@ -4,10 +4,10 @@ import sunrise.dao.AppointmentDao;
 import sunrise.dao.DentistDao;
 import sunrise.dao.TreatmentTypeDao;
 import sunrise.dao.UserDao;
-import sunrise.dao.impl.FileAppointmentDao;
-import sunrise.dao.impl.FileDentistDao;
-import sunrise.dao.impl.FileTreatmentTypeDao;
-import sunrise.dao.impl.FileUserDao;
+import sunrise.dao.jdbc.JdbcAppointmentDao;
+import sunrise.dao.jdbc.JdbcDentistDao;
+import sunrise.dao.jdbc.JdbcTreatmentTypeDao;
+import sunrise.dao.jdbc.JdbcUserDao;
 import sunrise.factory.AppointmentFactory;
 import sunrise.model.Appointment;
 import sunrise.model.Dentist;
@@ -18,6 +18,7 @@ import sunrise.observer.AppointmentEventPublisher;
 import sunrise.observer.ConsoleNotificationObserver;
 import sunrise.server.ApiServer;
 import sunrise.service.*;
+import sunrise.util.DatabaseConnectionManager;
 import sunrise.util.FileStorageManager;
 import sunrise.util.IdGenerator;
 import sunrise.util.PasswordUtil;
@@ -30,16 +31,41 @@ import java.util.stream.Collectors;
  * Application entry point: composes all the objects (dependency wiring is
  * done here by hand, since no dependency-injection framework is
  * permitted), seeds first-run demo data, and starts the web server.
+ *
+ * Storage backend: this class wires the MySQL-backed (JDBC) DAO
+ * implementations by default. Because every DAO is used only through its
+ * interface (sunrise.dao.AppointmentDao, DentistDao, TreatmentTypeDao,
+ * UserDao) everywhere else in the application, switching back to the
+ * plain-text-file DAOs for comparison/demo purposes is a one-line change
+ * per line below (swap JdbcXxxDao for FileXxxDao) - nothing in the
+ * service, factory, observer, or server layers needs to change either
+ * way. This is the practical benefit of the DAO/Repository pattern
+ * discussed in the report.
  */
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        FileStorageManager storage = FileStorageManager.getInstance();
+    /** Set to false to fall back to the text-file storage implementation instead of MySQL. */
+    private static final boolean USE_DATABASE = true;
 
-        UserDao userDao = new FileUserDao(storage);
-        DentistDao dentistDao = new FileDentistDao(storage);
-        TreatmentTypeDao treatmentTypeDao = new FileTreatmentTypeDao(storage);
-        AppointmentDao appointmentDao = new FileAppointmentDao(storage);
+    public static void main(String[] args) throws IOException {
+        UserDao userDao;
+        DentistDao dentistDao;
+        TreatmentTypeDao treatmentTypeDao;
+        AppointmentDao appointmentDao;
+
+        if (USE_DATABASE) {
+            DatabaseConnectionManager db = DatabaseConnectionManager.getInstance();
+            userDao = new JdbcUserDao(db);
+            dentistDao = new JdbcDentistDao(db);
+            treatmentTypeDao = new JdbcTreatmentTypeDao(db);
+            appointmentDao = new JdbcAppointmentDao(db);
+        } else {
+            FileStorageManager storage = FileStorageManager.getInstance();
+            userDao = new sunrise.dao.impl.FileUserDao(storage);
+            dentistDao = new sunrise.dao.impl.FileDentistDao(storage);
+            treatmentTypeDao = new sunrise.dao.impl.FileTreatmentTypeDao(storage);
+            appointmentDao = new sunrise.dao.impl.FileAppointmentDao(storage);
+        }
 
         seedDefaultData(userDao, dentistDao, treatmentTypeDao);
 
@@ -50,7 +76,11 @@ public class Main {
         AppointmentFactory appointmentFactory = new AppointmentFactory(idGenerator);
 
         AppointmentEventPublisher eventPublisher = new AppointmentEventPublisher();
-        eventPublisher.subscribe(new ConsoleNotificationObserver(storage));
+        // The notification log is a simple text file regardless of which
+        // database backend is used for application data - it is not part
+        // of the DAO layer, just an audit trail, so it always uses
+        // FileStorageManager directly.
+        eventPublisher.subscribe(new ConsoleNotificationObserver(FileStorageManager.getInstance()));
 
         AuthService authService = new AuthService(userDao);
         AppointmentService appointmentService = new AppointmentService(appointmentDao, appointmentFactory, eventPublisher);

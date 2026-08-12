@@ -17,6 +17,9 @@ target/
 data/*.txt
 data/*.log
 
+# Local database credentials - never commit real credentials
+src/main/resources/db.properties
+
 # OS
 .DS_Store
 Thumbs.db
