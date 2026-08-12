@@ -1,0 +1,22 @@
+# Compiled output
+out/
+bin/
+build/
+target/
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+
+# Runtime data (regenerated automatically, should not be committed)
+data/*.txt
+data/*.log
+
+# OS
+.DS_Store
+Thumbs.db
