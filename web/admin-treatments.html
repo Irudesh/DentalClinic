@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Treatment Types - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>Sunrise Dental Clinic</h1>
+  <nav><a href="dashboard.html">Back to menu</a></nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Add treatment type</h2>
+    <form id="addForm">
+      <label for="name">Treatment name</label>
+      <input id="name" required>
+      <label for="fee">Consultation fee (Rs.)</label>
+      <input id="fee" type="number" min="0" step="0.01" required>
+      <button type="submit">Add treatment type</button>
+    </form>
+    <p id="msg" class="message"></p>
+  </div>
+  <div class="card">
+    <h2>Existing treatment types</h2>
+    <table id="treatTable">
+      <tr><th>ID</th><th>Name</th><th>Fee (Rs.)</th><th></th></tr>
+    </table>
+  </div>
+</main>
+<script src="js/api.js"></script>
+<script>
+  Api.requireAdmin();
+
+  async function loadTreatments() {
+    const rows = await Api.getAuthed("/api/treatmenttypes");
+    const table = document.getElementById("treatTable");
+    table.innerHTML = "<tr><th>ID</th><th>Name</th><th>Fee (Rs.)</th><th></th></tr>";
+    rows.forEach(t => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + t.id + "</td><td>" + t.name + "</td><td>" + t.fee + "</td><td></td>";
+      const del = document.createElement("button");
+      del.className = "secondary";
+      del.textContent = "Remove";
+      del.style.marginTop = "0";
+      del.addEventListener("click", async () => {
+        await Api.postAuthed("/api/treatmenttypes/delete", { id: t.id });
+        loadTreatments();
+      });
+      tr.lastElementChild.appendChild(del);
+      table.appendChild(tr);
+    });
+  }
+  loadTreatments();
+
+  document.getElementById("addForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    try {
+      await Api.postAuthed("/api/treatmenttypes", {
+        name: document.getElementById("name").value,
+        fee: document.getElementById("fee").value
+      });
+      showMessage(msg, "Treatment type added.", false);
+      document.getElementById("addForm").reset();
+      loadTreatments();
+    } catch (err) {
+      showMessage(msg, err.message, true);
+    }
+  });
+</script>
+</body>
+</html>

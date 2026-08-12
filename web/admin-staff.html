@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Staff - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>Sunrise Dental Clinic</h1>
+  <nav><a href="dashboard.html">Back to menu</a></nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Add staff account</h2>
+    <form id="addForm">
+      <label for="username">Username</label>
+      <input id="username" required>
+      <label for="fullName">Full name</label>
+      <input id="fullName">
+      <label for="password">Password</label>
+      <input id="password" type="password" required>
+      <label for="role">Role</label>
+      <select id="role">
+        <option value="RECEPTIONIST">Receptionist</option>
+        <option value="ADMIN">Admin</option>
+      </select>
+      <button type="submit">Add staff account</button>
+    </form>
+    <p id="msg" class="message"></p>
+  </div>
+  <div class="card">
+    <h2>Existing staff</h2>
+    <table id="staffTable">
+      <tr><th>Username</th><th>Full name</th><th>Role</th><th></th></tr>
+    </table>
+  </div>
+</main>
+<script src="js/api.js"></script>
+<script>
+  Api.requireAdmin();
+
+  async function loadStaff() {
+    const rows = await Api.getAuthed("/api/staff");
+    const table = document.getElementById("staffTable");
+    table.innerHTML = "<tr><th>Username</th><th>Full name</th><th>Role</th><th></th></tr>";
+    rows.forEach(u => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + u.username + "</td><td>" + u.fullName + "</td><td>" + u.role + "</td><td></td>";
+      const del = document.createElement("button");
+      del.className = "secondary";
+      del.textContent = "Remove";
+      del.style.marginTop = "0";
+      del.addEventListener("click", async () => {
+        await Api.postAuthed("/api/staff/delete", { username: u.username });
+        loadStaff();
+      });
+      tr.lastElementChild.appendChild(del);
+      table.appendChild(tr);
+    });
+  }
+  loadStaff();
+
+  document.getElementById("addForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    try {
+      await Api.postAuthed("/api/staff", {
+        username: document.getElementById("username").value,
+        fullName: document.getElementById("fullName").value,
+        password: document.getElementById("password").value,
+        role: document.getElementById("role").value
+      });
+      showMessage(msg, "Staff account created.", false);
+      document.getElementById("addForm").reset();
+      loadStaff();
+    } catch (err) {
+      showMessage(msg, err.message, true);
+    }
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sunrise Dental Clinic - Login</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<main style="max-width:420px; margin-top:80px;">
+  <div class="card">
+    <h2>Sunrise Dental Clinic</h2>
+    <p style="color:#6b7280; font-size:14px;">Staff sign in</p>
+    <form id="loginForm">
+      <label for="username">Username</label>
+      <input id="username" type="text" required autocomplete="username">
+      <label for="password">Password</label>
+      <input id="password" type="password" required autocomplete="current-password">
+      <button type="submit">Login</button>
+    </form>
+    <p id="msg" class="message"></p>
+    <p style="font-size:12px; color:#9ca3af; margin-top:18px;">
+      Demo accounts &mdash; Admin: admin / admin123 &nbsp;|&nbsp; Receptionist: reception / reception123
+    </p>
+  </div>
+</main>
+<script src="js/api.js"></script>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    try {
+      const data = await Api.post("/api/login", {
+        username: document.getElementById("username").value,
+        password: document.getElementById("password").value
+      });
+      Api.setSession(data.token, data.role, data.fullName);
+      window.location.href = "dashboard.html";
+    } catch (err) {
+      showMessage(msg, err.message, true);
+    }
+  });
+</script>
+</body>
+</html>

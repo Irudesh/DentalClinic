@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Manage Dentists - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>Sunrise Dental Clinic</h1>
+  <nav><a href="dashboard.html">Back to menu</a></nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Add dentist</h2>
+    <form id="addForm">
+      <label for="name">Name</label>
+      <input id="name" required>
+      <label for="specialization">Specialization</label>
+      <input id="specialization">
+      <button type="submit">Add dentist</button>
+    </form>
+    <p id="msg" class="message"></p>
+  </div>
+  <div class="card">
+    <h2>Existing dentists</h2>
+    <table id="dentistTable">
+      <tr><th>ID</th><th>Name</th><th>Specialization</th><th></th></tr>
+    </table>
+  </div>
+</main>
+<script src="js/api.js"></script>
+<script>
+  Api.requireAdmin();
+
+  async function loadDentists() {
+    const rows = await Api.getAuthed("/api/dentists");
+    const table = document.getElementById("dentistTable");
+    table.innerHTML = "<tr><th>ID</th><th>Name</th><th>Specialization</th><th></th></tr>";
+    rows.forEach(d => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = "<td>" + d.id + "</td><td>" + d.name + "</td><td>" + d.specialization + "</td><td></td>";
+      const del = document.createElement("button");
+      del.className = "secondary";
+      del.textContent = "Remove";
+      del.style.marginTop = "0";
+      del.addEventListener("click", async () => {
+        await Api.postAuthed("/api/dentists/delete", { id: d.id });
+        loadDentists();
+      });
+      tr.lastElementChild.appendChild(del);
+      table.appendChild(tr);
+    });
+  }
+  loadDentists();
+
+  document.getElementById("addForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    try {
+      await Api.postAuthed("/api/dentists", {
+        name: document.getElementById("name").value,
+        specialization: document.getElementById("specialization").value
+      });
+      showMessage(msg, "Dentist added.", false);
+      document.getElementById("addForm").reset();
+      loadDentists();
+    } catch (err) {
+      showMessage(msg, err.message, true);
+    }
+  });
+</script>
+</body>
+</html>

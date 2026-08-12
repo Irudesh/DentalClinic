@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Search Appointment - Sunrise Dental Clinic</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="app-header">
+  <h1>Sunrise Dental Clinic</h1>
+  <nav><a href="dashboard.html">Back to menu</a></nav>
+</header>
+<main>
+  <div class="card">
+    <h2>Search appointment</h2>
+    <form id="searchForm">
+      <label for="number">Appointment number</label>
+      <input id="number" placeholder="e.g. APT1001" required>
+      <button type="submit">Search</button>
+    </form>
+    <p id="msg" class="message"></p>
+    <div id="resultBox" style="display:none;">
+      <table>
+        <tr><th>Appointment number</th><td id="rNumber"></td></tr>
+        <tr><th>Patient name</th><td id="rPatient"></td></tr>
+        <tr><th>Address</th><td id="rAddress"></td></tr>
+        <tr><th>Contact number</th><td id="rContact"></td></tr>
+        <tr><th>Dentist</th><td id="rDentist"></td></tr>
+        <tr><th>Treatment</th><td id="rTreatment"></td></tr>
+        <tr><th>Date</th><td id="rDate"></td></tr>
+        <tr><th>Time</th><td id="rTime"></td></tr>
+        <tr><th>Discount</th><td id="rDiscount"></td></tr>
+      </table>
+    </div>
+  </div>
+</main>
+<script src="js/api.js"></script>
+<script>
+  Api.requireLogin();
+  let dentistMap = {}, treatmentMap = {};
+
+  async function loadLookups() {
+    (await Api.getAuthed("/api/dentists")).forEach(d => dentistMap[d.id] = d.name);
+    (await Api.getAuthed("/api/treatmenttypes")).forEach(t => treatmentMap[t.id] = t.name);
+  }
+  loadLookups();
+
+  document.getElementById("searchForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById("msg");
+    document.getElementById("resultBox").style.display = "none";
+    try {
+      const a = await Api.getAuthed("/api/appointments", { number: document.getElementById("number").value });
+      document.getElementById("rNumber").textContent = a.appointmentNumber;
+      document.getElementById("rPatient").textContent = a.patientName;
+      document.getElementById("rAddress").textContent = a.address;
+      document.getElementById("rContact").textContent = a.contactNumber;
+      document.getElementById("rDentist").textContent = dentistMap[a.dentistId] || a.dentistId;
+      document.getElementById("rTreatment").textContent = treatmentMap[a.treatmentTypeId] || a.treatmentTypeId;
+      document.getElementById("rDate").textContent = a.date;
+      document.getElementById("rTime").textContent = a.time;
+      document.getElementById("rDiscount").textContent = a.discountPercent + "%";
+      document.getElementById("resultBox").style.display = "block";
+      showMessage(msg, "", false);
+    } catch (err) {
+      showMessage(msg, err.message, true);
+    }
+  });
+</script>
+</body>
+</html>
