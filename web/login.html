@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Sunrise Dental Clinic - Login</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sunrise Dental Clinic - Login</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<main style="max-width:420px; margin-top:80px;">
-  <div class="card">
-    <h2>Sunrise Dental Clinic</h2>
-    <p style="color:#6b7280; font-size:14px;">Staff sign in</p>
+<div class="login-shell">
+  <div class="login-card">
+    <div class="login-brand">
+      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="24" height="24" rx="6" fill="#E8A33D"/>
+        <path d="M12 5.2c-2.3 0-4.1 1.3-4.3 3.5-.2 2.3.5 3.4.8 5.6.2 1.7.1 4.3 1.4 5.7.6.6 1.1-.4 1.3-1.4.2-1 .2-2.3.8-2.3s.6 1.3.8 2.3c.2 1 .7 2 1.3 1.4 1.3-1.4 1.2-4 1.4-5.7.3-2.2 1-3.3.8-5.6C16.1 6.5 14.3 5.2 12 5.2z" fill="#084F41"/>
+      </svg>
+      <span class="brand-text">Sunrise Dental<small>Clinic Operations</small></span>
+    </div>
+    <h2 style="margin-bottom:2px;">Staff sign in</h2>
+    <p style="color:var(--muted); font-size:13px; margin-top:0;">Enter your clinic credentials to continue.</p>
     <form id="loginForm">
       <label for="username">Username</label>
       <input id="username" type="text" required autocomplete="username">
       <label for="password">Password</label>
       <input id="password" type="password" required autocomplete="current-password">
-      <button type="submit">Login</button>
+      <button type="submit" style="width:100%;">Sign in</button>
     </form>
-    <p id="msg" class="message"></p>
-    <p style="font-size:12px; color:#9ca3af; margin-top:18px;">
-      Demo accounts &mdash; Admin: admin / admin123 &nbsp;|&nbsp; Receptionist: reception / reception123
-    </p>
+    <p id="msg" class="message" role="status"></p>
+    <div class="demo-note">
+      admin / admin123 &mdash; Administrator<br>
+      reception / reception123 &mdash; Receptionist
+    </div>
   </div>
-</main>
+</div>
 <script src="js/api.js"></script>
 <script>
   document.getElementById("loginForm").addEventListener("submit", async (e) => {

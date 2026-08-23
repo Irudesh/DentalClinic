@@ -7,7 +7,7 @@ public class StandardFeeStrategy implements FeeCalculationStrategy {
         return round(baseFee);
     }
 
-    static double round(double value) {
+    public static double round(double value) {
         return Math.round(value * 100.0) / 100.0;
     }
 }
