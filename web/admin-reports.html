@@ -1,41 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Reports - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reports - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card">
-    <h2>Clinic summary report</h2>
-    <table>
-      <tr><th>Total appointments</th><td id="rTotal"></td></tr>
-      <tr><th>Estimated total revenue</th><td>Rs. <span id="rRevenue"></span></td></tr>
-    </table>
-    <h2 style="margin-top:24px;">Appointments per dentist</h2>
-    <table id="perDentistTable">
-      <tr><th>Dentist ID</th><th>Appointment count</th></tr>
-    </table>
+<div id="sidebar-root"></div>
+<div id="mobile-nav-root"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow">Administration</p>
+    <h1 class="page-title">Clinic summary report</h1>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="num" id="rTotal">-</div><div class="lbl">Total appointments</div></div>
+      <div class="stat-card"><div class="num" id="rRevenue">-</div><div class="lbl">Est. revenue (Rs.)</div></div>
+    </div>
+
+    <div class="card">
+      <h2>Appointments per dentist</h2>
+      <table id="perDentistTable">
+        <tr><th>Dentist ID</th><th>Appointment count</th></tr>
+      </table>
+    </div>
   </div>
-</main>
+</div>
 <script src="js/api.js"></script>
+<script src="js/layout.js"></script>
 <script>
   Api.requireAdmin();
 
   async function loadReport() {
     const r = await Api.getAuthed("/api/reports/summary");
     document.getElementById("rTotal").textContent = r.totalAppointments;
-    document.getElementById("rRevenue").textContent = r.estimatedTotalRevenue.toFixed(2);
+    document.getElementById("rRevenue").textContent = Number(r.estimatedTotalRevenue).toLocaleString();
     const table = document.getElementById("perDentistTable");
     table.innerHTML = "<tr><th>Dentist ID</th><th>Appointment count</th></tr>";
     Object.keys(r.appointmentsPerDentist || {}).forEach(id => {
       const tr = document.createElement("tr");
-      tr.innerHTML = "<td>" + id + "</td><td>" + r.appointmentsPerDentist[id] + "</td>";
+      tr.innerHTML = "<td class='mono'>" + id + "</td><td class='mono'>" + r.appointmentsPerDentist[id] + "</td>";
       table.appendChild(tr);
     });
   }
