@@ -1,40 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Search Appointment - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Search Appointment - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card">
-    <h2>Search appointment</h2>
-    <form id="searchForm">
-      <label for="number">Appointment number</label>
-      <input id="number" placeholder="e.g. APT1001" required>
-      <button type="submit">Search</button>
-    </form>
-    <p id="msg" class="message"></p>
-    <div id="resultBox" style="display:none;">
+<div id="sidebar-root"></div>
+<div id="mobile-nav-root"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow">Front Desk</p>
+    <h1 class="page-title">Search appointment</h1>
+    <div class="card">
+      <form id="searchForm">
+        <label for="number">Appointment number</label>
+        <input id="number" class="mono" placeholder="e.g. APT1001" required>
+        <button type="submit">Search</button>
+      </form>
+      <p id="msg" class="message" role="status"></p>
+    </div>
+    <div class="card" id="resultBox" style="display:none;">
+      <h2>Appointment details</h2>
       <table>
-        <tr><th>Appointment number</th><td id="rNumber"></td></tr>
+        <tr><th>Appointment number</th><td><span class="ref-badge" id="rNumber"></span></td></tr>
         <tr><th>Patient name</th><td id="rPatient"></td></tr>
         <tr><th>Address</th><td id="rAddress"></td></tr>
-        <tr><th>Contact number</th><td id="rContact"></td></tr>
+        <tr><th>Contact number</th><td class="mono" id="rContact"></td></tr>
         <tr><th>Dentist</th><td id="rDentist"></td></tr>
         <tr><th>Treatment</th><td id="rTreatment"></td></tr>
-        <tr><th>Date</th><td id="rDate"></td></tr>
-        <tr><th>Time</th><td id="rTime"></td></tr>
+        <tr><th>Date</th><td class="mono" id="rDate"></td></tr>
+        <tr><th>Time</th><td class="mono" id="rTime"></td></tr>
         <tr><th>Discount</th><td id="rDiscount"></td></tr>
       </table>
     </div>
   </div>
-</main>
+</div>
 <script src="js/api.js"></script>
+<script src="js/layout.js"></script>
 <script>
   Api.requireLogin();
   let dentistMap = {}, treatmentMap = {};
@@ -59,7 +63,9 @@
       document.getElementById("rTreatment").textContent = treatmentMap[a.treatmentTypeId] || a.treatmentTypeId;
       document.getElementById("rDate").textContent = a.date;
       document.getElementById("rTime").textContent = a.time;
-      document.getElementById("rDiscount").textContent = a.discountPercent + "%";
+      document.getElementById("rDiscount").innerHTML = a.discountPercent > 0
+        ? '<span class="badge-amber">' + a.discountPercent + '% off</span>'
+        : '<span style="color:var(--muted)">None</span>';
       document.getElementById("resultBox").style.display = "block";
       showMessage(msg, "", false);
     } catch (err) {

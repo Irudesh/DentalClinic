@@ -1,46 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Billing - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billing - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header no-print">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card no-print">
-    <h2>Calculate and print bill</h2>
-    <form id="billForm">
-      <label for="number">Appointment number</label>
-      <input id="number" placeholder="e.g. APT1001" required>
-      <button type="submit">Calculate bill</button>
-    </form>
-    <p id="msg" class="message"></p>
-  </div>
-
-  <div class="card" id="billCard" style="display:none;">
-    <h2 class="no-print">Bill / Receipt</h2>
-    <div class="bill-box" id="billBox">
-      <p><strong>Sunrise Dental Clinic</strong> - Official Receipt</p>
-      <p>Appointment No: <span id="bNumber"></span></p>
-      <p>Patient: <span id="bPatient"></span></p>
-      <p>Dentist: <span id="bDentist"></span></p>
-      <p>Treatment: <span id="bTreatment"></span></p>
-      <p>Consultation fee: Rs. <span id="bBase"></span></p>
-      <p>Discount: <span id="bDiscountPercent"></span>% (Rs. <span id="bDiscountAmount"></span>)</p>
-      <p class="total">Total payable: Rs. <span id="bTotal"></span></p>
-      <p style="font-size:12px; color:#6b7280;">Generated: <span id="bGenerated"></span></p>
+<div id="sidebar-root" class="no-print"></div>
+<div id="mobile-nav-root" class="no-print"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow no-print">Front Desk</p>
+    <h1 class="page-title no-print">Calculate and print bill</h1>
+    <div class="card no-print">
+      <form id="billForm">
+        <label for="number">Appointment number</label>
+        <input id="number" class="mono" placeholder="e.g. APT1001" required>
+        <button type="submit">Calculate bill</button>
+      </form>
+      <p id="msg" class="message" role="status"></p>
     </div>
-    <button class="secondary no-print" onclick="window.print()">Print bill</button>
+
+    <div class="card" id="billCard" style="display:none;">
+      <h2 class="no-print">Bill / Receipt</h2>
+      <div class="bill-box" id="billBox">
+        <div class="clinic-name">Sunrise Dental Clinic</div>
+        <div style="font-size:12px; color:var(--muted); margin-bottom:14px;">Official Receipt</div>
+        <div class="line"><span>Appointment No.</span><span class="ref-badge" id="bNumber"></span></div>
+        <div class="line"><span>Patient</span><span id="bPatient"></span></div>
+        <div class="line"><span>Dentist</span><span id="bDentist"></span></div>
+        <div class="line"><span>Treatment</span><span id="bTreatment"></span></div>
+        <div class="line"><span>Consultation fee</span><span class="mono">Rs. <span id="bBase"></span></span></div>
+        <div class="line"><span>Discount</span><span class="mono"><span id="bDiscountPercent"></span>% (Rs. <span id="bDiscountAmount"></span>)</span></div>
+        <div class="total"><span>Total payable</span><span>Rs. <span id="bTotal"></span></span></div>
+        <div style="font-size:11px; color:var(--muted); margin-top:12px; font-family:var(--font-mono);">Generated: <span id="bGenerated"></span></div>
+      </div>
+      <button class="secondary no-print" style="margin-top:16px;" onclick="window.print()">Print bill</button>
+    </div>
   </div>
-</main>
-<style>
-  @media print { .no-print { display: none !important; } main { max-width: none; } }
-</style>
+</div>
 <script src="js/api.js"></script>
+<script src="js/layout.js"></script>
 <script>
   Api.requireLogin();
 

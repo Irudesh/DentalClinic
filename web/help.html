@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Help - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Help - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card">
-    <h2>Help - how to use this system</h2>
-    <ol style="line-height:1.9;">
-      <li><strong>Login</strong> using the username and password given to you by the clinic administrator.</li>
-      <li><strong>Register new appointment:</strong> from the main menu, choose "Register New Appointment", fill in the patient's details, pick a dentist and treatment type, choose a date/time, then submit. Note down the appointment number shown - the patient will need it.</li>
-      <li><strong>Search appointment:</strong> choose "Search Appointment" and enter the appointment number to view the stored patient and appointment details.</li>
-      <li><strong>Calculate and print bill:</strong> choose "Calculate and Print Bill", enter the appointment number, and press "Calculate bill". Use the "Print bill" button to print a receipt for the patient.</li>
-      <li><strong>Exit system:</strong> use "Exit / Logout" in the top-right corner of the menu screen to safely log out.</li>
-    </ol>
-    <h2>For administrators</h2>
-    <ol style="line-height:1.9;">
-      <li><strong>Manage staff accounts:</strong> add or remove receptionist/admin logins.</li>
-      <li><strong>Manage dentists:</strong> add or remove dentists available for booking.</li>
-      <li><strong>Manage treatment types:</strong> add or remove treatments and set their consultation fee.</li>
-      <li><strong>View reports:</strong> see a summary of total appointments, appointments per dentist, and estimated revenue.</li>
-    </ol>
+<div id="sidebar-root"></div>
+<div id="mobile-nav-root"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow">Front Desk</p>
+    <h1 class="page-title">Help &amp; how-to guide</h1>
+    <div class="card">
+      <h2>For all staff</h2>
+      <ol class="help-list">
+        <li><strong>Login</strong> using the username and password given to you by the clinic administrator.</li>
+        <li><strong>Register new appointment:</strong> fill in the patient's details, pick a dentist and treatment type, choose a date/time, then submit. Note the appointment number shown &mdash; the patient will need it.</li>
+        <li><strong>Search appointment:</strong> enter the appointment number to view the stored patient and appointment details.</li>
+        <li><strong>Calculate and print bill:</strong> enter the appointment number and press "Calculate bill." Use "Print bill" for a receipt.</li>
+        <li><strong>Exit system:</strong> use "Exit / Logout" in the sidebar to safely log out.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h2>For administrators</h2>
+      <ol class="help-list">
+        <li><strong>Staff accounts:</strong> add or remove receptionist/admin logins.</li>
+        <li><strong>Dentists:</strong> add or remove dentists available for booking.</li>
+        <li><strong>Treatment types:</strong> add or remove treatments and set their consultation fee.</li>
+        <li><strong>Reports:</strong> see total appointments, appointments per dentist, and estimated revenue.</li>
+      </ol>
+    </div>
   </div>
-</main>
+</div>
+<script src="js/api.js"></script>
+<script src="js/layout.js"></script>
+<script>Api.requireLogin();</script>
 </body>
 </html>

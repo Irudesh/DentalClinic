@@ -1,35 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Manage Treatment Types - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Treatment Types - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card">
-    <h2>Add treatment type</h2>
-    <form id="addForm">
-      <label for="name">Treatment name</label>
-      <input id="name" required>
-      <label for="fee">Consultation fee (Rs.)</label>
-      <input id="fee" type="number" min="0" step="0.01" required>
-      <button type="submit">Add treatment type</button>
-    </form>
-    <p id="msg" class="message"></p>
+<div id="sidebar-root"></div>
+<div id="mobile-nav-root"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow">Administration</p>
+    <h1 class="page-title">Manage treatment types</h1>
+    <div class="card">
+      <h2>Add treatment type</h2>
+      <form id="addForm">
+        <label for="name">Treatment name</label>
+        <input id="name" required>
+        <label for="fee">Consultation fee (Rs.)</label>
+        <input id="fee" type="number" min="0" step="0.01" required>
+        <button type="submit">Add treatment type</button>
+      </form>
+      <p id="msg" class="message" role="status"></p>
+    </div>
+    <div class="card">
+      <h2>Existing treatment types</h2>
+      <table id="treatTable">
+        <tr><th>ID</th><th>Name</th><th>Fee (Rs.)</th><th></th></tr>
+      </table>
+    </div>
   </div>
-  <div class="card">
-    <h2>Existing treatment types</h2>
-    <table id="treatTable">
-      <tr><th>ID</th><th>Name</th><th>Fee (Rs.)</th><th></th></tr>
-    </table>
-  </div>
-</main>
+</div>
 <script src="js/api.js"></script>
+<script src="js/layout.js"></script>
 <script>
   Api.requireAdmin();
 
@@ -39,7 +43,7 @@
     table.innerHTML = "<tr><th>ID</th><th>Name</th><th>Fee (Rs.)</th><th></th></tr>";
     rows.forEach(t => {
       const tr = document.createElement("tr");
-      tr.innerHTML = "<td>" + t.id + "</td><td>" + t.name + "</td><td>" + t.fee + "</td><td></td>";
+      tr.innerHTML = "<td class='mono'>" + t.id + "</td><td>" + t.name + "</td><td class='mono'>" + t.fee + "</td><td></td>";
       const del = document.createElement("button");
       del.className = "secondary";
       del.textContent = "Remove";

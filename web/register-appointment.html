@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Register Appointment - Sunrise Dental Clinic</title>
-<link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Register Appointment - Sunrise Dental Clinic</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-<header class="app-header">
-  <h1>Sunrise Dental Clinic</h1>
-  <nav><a href="dashboard.html">Back to menu</a></nav>
-</header>
-<main>
-  <div class="card">
-    <h2>Register new appointment</h2>
-    <form id="apptForm">
-      <label for="patientName">Patient name</label>
-      <input id="patientName" required>
-      <label for="address">Address</label>
-      <input id="address">
-      <label for="contactNumber">Contact number</label>
-      <input id="contactNumber" required>
-      <label for="dentistId">Dentist</label>
-      <select id="dentistId" required></select>
-      <label for="treatmentTypeId">Treatment type</label>
-      <select id="treatmentTypeId" required></select>
-      <label for="date">Appointment date</label>
-      <input id="date" type="date" required>
-      <label for="time">Appointment time</label>
-      <input id="time" type="time" required>
-      <label for="discountPercent">Discount % (optional)</label>
-      <input id="discountPercent" type="number" min="0" max="100" step="1" value="0">
-      <button type="submit">Register appointment</button>
-    </form>
-    <p id="msg" class="message"></p>
+<div id="sidebar-root"></div>
+<div id="mobile-nav-root"></div>
+<div class="content">
+  <div class="content-inner">
+    <p class="eyebrow">Front Desk</p>
+    <h1 class="page-title">Register new appointment</h1>
+    <div class="card">
+      <form id="apptForm">
+        <label for="patientName">Patient name</label>
+        <input id="patientName" required>
+        <label for="address">Address</label>
+        <input id="address">
+        <label for="contactNumber">Contact number</label>
+        <input id="contactNumber" required>
+        <label for="dentistId">Dentist</label>
+        <select id="dentistId" required></select>
+        <label for="treatmentTypeId">Treatment type</label>
+        <select id="treatmentTypeId" required></select>
+        <label for="date">Appointment date</label>
+        <input id="date" type="date" required>
+        <label for="time">Appointment time</label>
+        <input id="time" type="time" required>
+        <label for="discountPercent">Discount % (optional)</label>
+        <input id="discountPercent" type="number" min="0" max="100" step="1" value="0">
+        <button type="submit">Register appointment</button>
+      </form>
+      <p id="msg" class="message" role="status"></p>
+    </div>
   </div>
-</main>
+</div>
 <script src="js/api.js"></script>
+<script src="js/layout.js"></script>
 <script>
   Api.requireLogin();
 
