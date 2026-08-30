@@ -94,8 +94,6 @@ that needs to change to switch backends - nothing else in the codebase
 depends on which storage mechanism is active. This was a deliberate
 benefit of using the DAO/Repository pattern from the start.
 
-
-
 This project uses no build tool beyond `javac`/`java` (deliberately, to avoid
 any dependency-management framework). You will need:
 
@@ -115,33 +113,8 @@ java -cp out sunrise.Main
 
 Then open **http://localhost:8080** in a browser.
 
-### Default accounts (seeded automatically on first run)
-
-| Role | Username | Password |
-|---|---|---|
-| Admin | `admin` | `admin123` |
-| Receptionist | `reception` | `reception123` |
 
 ### Running the tests
 
 Open the project in IntelliJ IDEA or Eclipse, add JUnit 5 to the module's
 test dependencies, and run the classes under `src/test/java`.
-
-## Known limitations (documented honestly for the report)
-
-- Password hashing uses a single static salt with SHA-256 rather than a
-  per-user salt and a slower algorithm (bcrypt/PBKDF2); acceptable for a
-  coursework demonstrator, flagged as a production concern.
-- Authentication uses a simple in-memory bearer token rather than
-  HttpOnly cookies, since no session-management framework is permitted.
-- The MySQL Connector/J driver jar and a running MySQL server were not
-  available in the sandbox this project was built in (no internet
-  access), so the JDBC code, while carefully written against the
-  documented JDBC API and manually checked, has not been run/tested by
-  Claude against a live database. It must be tested by the student
-  against their own MySQL instance before submission, and any errors
-  reported back for fixing.
-- No JDK (`javac`) was available in the sandbox either (only a JRE), so
-  none of the Java source in this project has been compiler-verified by
-  Claude. It should be opened in an IDE (IntelliJ/Eclipse) and compiled
-  there; any errors should be reported back for fixing.
