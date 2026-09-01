@@ -41,9 +41,7 @@ public class JdbcAppointmentDao implements AppointmentDao {
             ps.setBigDecimal(9, BigDecimal.valueOf(appointment.getDiscountPercent()));
             ps.executeUpdate();
         } catch (SQLException e) {
-            // A UNIQUE constraint violation here (uq_dentist_slot) means the
-            // dentist already has an appointment at that exact date/time -
-            // the database-level double-booking guard described in schema.sql.
+
             if ("23000".equals(e.getSQLState())) {
                 throw new IllegalArgumentException(
                         "That dentist already has an appointment at this date and time.", e);
