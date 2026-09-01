@@ -7,14 +7,6 @@ import sunrise.util.IdGenerator;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Factory pattern: centralises how an Appointment object is built,
- * including generating its unique appointment number and validating the
- * raw input before an Appointment is allowed to exist. Kept deliberately
- * separate from AppointmentService (which coordinates persistence and
- * notifications) so that object-creation concerns and business-workflow
- * concerns are not mixed in one class (Single Responsibility Principle).
- */
 public class AppointmentFactory {
 
     private final IdGenerator idGenerator;
