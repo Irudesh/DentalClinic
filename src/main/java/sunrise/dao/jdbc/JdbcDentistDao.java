@@ -12,12 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * MySQL-backed implementation of DentistDao. All statements are
- * PreparedStatements with bound parameters (never string-concatenated
- * SQL), to avoid SQL injection - relevant to the module's Ethical/
- * secure-coding learning outcome.
- */
 public class JdbcDentistDao implements DentistDao {
 
     private final DatabaseConnectionManager db;
