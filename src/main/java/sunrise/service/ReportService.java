@@ -9,11 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Implements "View reports" for the Admin actor: simple aggregate
- * summaries computed on demand from existing data, avoiding the need
- * for any dedicated reporting store.
- */
 public class ReportService {
 
     private final AppointmentDao appointmentDao;
