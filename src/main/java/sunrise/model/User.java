@@ -2,11 +2,6 @@ package sunrise.model;
 
 import java.util.Objects;
 
-/**
- * Represents a staff login account (Task: User Authentication).
- * The password is always stored as a hash (see sunrise.util.PasswordUtil),
- * never in plain text.
- */
 public class User {
 
     private final String username;
