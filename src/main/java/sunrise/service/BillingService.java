@@ -14,11 +14,6 @@ import sunrise.service.fee.StandardFeeStrategy;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-/**
- * Implements "Calculate and Print Bill". Picks a FeeCalculationStrategy
- * at run time (Strategy pattern) depending on whether the appointment has
- * a discount applied.
- */
 public class BillingService {
 
     private final AppointmentDao appointmentDao;
