@@ -1,10 +1,3 @@
--- ============================================================
--- Sunrise Dental Clinic - MySQL schema
--- Designed in MySQL Workbench (EER diagram) and exported here.
--- Run this once against a fresh schema, e.g.:
---   mysql -u root -p -e "CREATE DATABASE sunrise_dental;"
---   mysql -u root -p sunrise_dental < db/schema.sql
--- ============================================================
 
 CREATE TABLE IF NOT EXISTS users (
     username        VARCHAR(50)  NOT NULL PRIMARY KEY,
