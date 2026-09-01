@@ -7,11 +7,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Parses application/x-www-form-urlencoded bodies (used for POST requests
- * from the plain HTML/JS frontend) and URL query strings (used for GET
- * requests), both without any external dependency.
- */
 public final class FormParser {
 
     private FormParser() {
