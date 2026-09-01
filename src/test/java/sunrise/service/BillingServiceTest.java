@@ -19,13 +19,6 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Tests BillingService's coordination logic (Strategy pattern selection)
- * against small in-memory "fake" DAO implementations, so the test does
- * not depend on the file system and runs quickly and repeatably - a key
- * property for making code "inherently testable" as covered in the TDD
- * lecture material.
- */
 class BillingServiceTest {
 
     private BillingService billingService;
@@ -68,8 +61,6 @@ class BillingServiceTest {
     void returnsEmptyWhenAppointmentNumberNotFound() {
         assertTrue(billingService.generateBill("APT9999").isEmpty());
     }
-
-    // --- Minimal in-memory fakes, used only by this test class ---
 
     static class InMemoryAppointmentDao implements AppointmentDao {
         private final List<Appointment> data = new ArrayList<>();
