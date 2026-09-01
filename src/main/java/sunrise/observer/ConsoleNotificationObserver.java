@@ -6,15 +6,6 @@ import sunrise.util.FileStorageManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- * A concrete AppointmentObserver that records a confirmation message to a
- * log file whenever a new appointment is registered, simulating the
- * "email alerts / SMS notifications" style feature the rubric calls out.
- * A real deployment would swap this for an observer that calls an SMS or
- * email gateway; because no external network/API access is available
- * here, this observer writes a human-readable confirmation line instead,
- * demonstrating the same extension point.
- */
 public class ConsoleNotificationObserver implements AppointmentObserver {
 
     private static final String LOG_FILE = "notifications.log";
