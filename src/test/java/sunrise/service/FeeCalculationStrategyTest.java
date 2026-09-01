@@ -19,7 +19,6 @@ class FeeCalculationStrategyTest {
     @Test
     void discountStrategyAppliesPercentageOffBaseFee() {
         FeeCalculationStrategy strategy = new DiscountFeeStrategy();
-        // 3000 with 10% off => 2700
         assertEquals(2700.0, strategy.calculateTotal(3000.0, 10));
     }
 
