@@ -27,24 +27,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Application entry point: composes all the objects (dependency wiring is
- * done here by hand, since no dependency-injection framework is
- * permitted), seeds first-run demo data, and starts the web server.
- *
- * Storage backend: this class wires the MySQL-backed (JDBC) DAO
- * implementations by default. Because every DAO is used only through its
- * interface (sunrise.dao.AppointmentDao, DentistDao, TreatmentTypeDao,
- * UserDao) everywhere else in the application, switching back to the
- * plain-text-file DAOs for comparison/demo purposes is a one-line change
- * per line below (swap JdbcXxxDao for FileXxxDao) - nothing in the
- * service, factory, observer, or server layers needs to change either
- * way. This is the practical benefit of the DAO/Repository pattern
- * discussed in the report.
- */
 public class Main {
 
-    /** Set to false to fall back to the text-file storage implementation instead of MySQL. */
     private static final boolean USE_DATABASE = true;
 
     public static void main(String[] args) throws IOException {
@@ -76,10 +60,6 @@ public class Main {
         AppointmentFactory appointmentFactory = new AppointmentFactory(idGenerator);
 
         AppointmentEventPublisher eventPublisher = new AppointmentEventPublisher();
-        // The notification log is a simple text file regardless of which
-        // database backend is used for application data - it is not part
-        // of the DAO layer, just an audit trail, so it always uses
-        // FileStorageManager directly.
         eventPublisher.subscribe(new ConsoleNotificationObserver(FileStorageManager.getInstance()));
 
         AuthService authService = new AuthService(userDao);
@@ -95,7 +75,6 @@ public class Main {
         server.start();
     }
 
-    /** Seeds a default Admin and Receptionist account plus sample dentists/treatments on first run only. */
     private static void seedDefaultData(UserDao userDao, DentistDao dentistDao, TreatmentTypeDao treatmentTypeDao) {
         if (userDao.findAll().isEmpty()) {
             userDao.save(new User("admin", PasswordUtil.hash("admin123"), Role.ADMIN, "Clinic Administrator"));
