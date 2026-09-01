@@ -20,8 +20,7 @@ public class FileDentistDao implements DentistDao {
 
     @Override
     public void save(Dentist dentist) {
-        // Replace-if-exists semantics: rewrite the file without any existing
-        // row for this id, then append the (possibly updated) row.
+
         List<Dentist> remaining = findAll().stream()
                 .filter(d -> !d.getId().equalsIgnoreCase(dentist.getId()))
                 .collect(Collectors.toList());
