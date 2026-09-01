@@ -12,12 +12,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
-/**
- * Small shared helper (not a framework - just a few static utility
- * methods) used by every API handler to avoid repeating the same
- * boilerplate for reading query parameters, checking auth, and writing
- * JSON responses.
- */
 final class ApiSupport {
 
     private ApiSupport() {
