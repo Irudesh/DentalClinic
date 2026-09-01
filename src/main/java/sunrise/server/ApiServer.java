@@ -8,12 +8,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
-/**
- * The web-service layer required by the brief: a distributed application
- * exposing HTTP endpoints that the browser-based HTML/CSS/JS frontend
- * calls over the network, built entirely on the JDK's built-in
- * com.sun.net.httpserver.HttpServer (no Spring, no servlet container).
- */
 public class ApiServer {
 
     private final int port;
