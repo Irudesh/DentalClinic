@@ -1,4 +1,4 @@
-// Small shared fetch() wrapper. No frameworks/libraries - plain JavaScript.
+
 
 const Api = {
   base: "",
