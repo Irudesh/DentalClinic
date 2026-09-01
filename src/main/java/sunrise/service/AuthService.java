@@ -14,7 +14,6 @@ public class AuthService {
         this.userDao = userDao;
     }
 
-    /** Returns the authenticated User if the credentials are valid, otherwise empty. */
     public Optional<User> login(String username, String password) {
         if (username == null || password == null) {
             return Optional.empty();
