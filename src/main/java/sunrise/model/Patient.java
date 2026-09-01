@@ -1,12 +1,5 @@
 package sunrise.model;
 
-/**
- * Patient details as captured directly on the appointment record, per the
- * assessment brief ("Store patient and appointment details including:
- * ... patient name, address, contact number ..."). Modelled as a small
- * immutable value object rather than a separately persisted entity, since
- * the brief does not require standalone patient management.
- */
 public class Patient {
 
     private final String name;
