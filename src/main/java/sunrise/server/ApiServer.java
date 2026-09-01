@@ -36,7 +36,6 @@ public class ApiServer {
     public void start() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
-        // JSON API endpoints
         server.createContext("/api/login", new LoginHandler(authService));
         server.createContext("/api/logout", new LogoutHandler());
         server.createContext("/api/appointments", new AppointmentHandler(appointmentService));
@@ -49,11 +48,8 @@ public class ApiServer {
         server.createContext("/api/staff/delete", new StaffDeleteHandler(staffService));
         server.createContext("/api/reports/summary", new ReportHandler(reportService));
 
-        // Static frontend (HTML/CSS/JS) - everything not under /api
         server.createContext("/", new StaticFileHandler());
 
-        // A small fixed thread pool lets the server handle several
-        // concurrent staff members without blocking on a single request.
         server.setExecutor(Executors.newFixedThreadPool(8));
         server.start();
         System.out.println("Sunrise Dental Clinic server running on http://localhost:" + port);
