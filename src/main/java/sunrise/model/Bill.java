@@ -2,11 +2,6 @@ package sunrise.model;
 
 import java.time.LocalDateTime;
 
-/**
- * A generated bill/receipt for an appointment. Produced by BillingService,
- * which applies a FeeCalculationStrategy (Strategy pattern) to work out
- * the total.
- */
 public class Bill {
 
     private final String appointmentNumber;
