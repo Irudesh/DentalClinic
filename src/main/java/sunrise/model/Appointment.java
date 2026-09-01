@@ -3,10 +3,6 @@ package sunrise.model;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-/**
- * Represents a single patient appointment, identified by a unique
- * appointment number as required by the brief.
- */
 public class Appointment {
 
     private final String appointmentNumber;
@@ -15,7 +11,7 @@ public class Appointment {
     private final String treatmentTypeId;
     private final LocalDate date;
     private final LocalTime time;
-    private final double discountPercent; // 0 = no discount (Apply Discount <<extend>>)
+    private final double discountPercent; 
 
     public Appointment(String appointmentNumber, Patient patient, String dentistId,
                         String treatmentTypeId, LocalDate date, LocalTime time,
@@ -57,7 +53,6 @@ public class Appointment {
         return discountPercent;
     }
 
-    /** Serialises this appointment to a single pipe-delimited line for text-file storage. */
     public String toDataLine() {
         return String.join("|",
                 appointmentNumber,
