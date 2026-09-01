@@ -2,13 +2,6 @@ package sunrise.util;
 
 import java.util.List;
 import java.util.Map;
-
-/**
- * A deliberately small JSON serialiser covering exactly what this
- * application's API responses need (strings, numbers, booleans, nested
- * objects and arrays of objects). Written by hand because the "no
- * frameworks" constraint rules out pulling in a library such as Gson.
- */
 public final class JsonWriter {
 
     private JsonWriter() {
