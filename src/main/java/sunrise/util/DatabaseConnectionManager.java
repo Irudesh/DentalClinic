@@ -7,19 +7,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
-/**
- * Singleton pattern: a single, shared point of configuration for the
- * MySQL connection, mirroring the role FileStorageManager plays for the
- * text-file version of this system. Connection details are read from
- * db.properties on the classpath so credentials are not hard-coded.
- *
- * A new Connection is handed out per call to getConnection() rather than
- * one long-lived shared Connection, since java.sql.Connection is not
- * guaranteed thread-safe and the HTTP server handles requests
- * concurrently on a small thread pool (see sunrise.server.ApiServer).
- * Each DAO method opens its connection in a try-with-resources block,
- * so connections are always closed promptly after use.
- */
+
 public final class DatabaseConnectionManager {
 
     private static final DatabaseConnectionManager INSTANCE = new DatabaseConnectionManager();
