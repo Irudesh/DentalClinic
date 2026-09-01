@@ -10,12 +10,6 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Coordinates the "Register New Appointment" and "Display Appointment
- * Details" use cases: uses AppointmentFactory to build a valid
- * Appointment, AppointmentDao to persist it, and AppointmentEventPublisher
- * to notify any interested observers once it is saved.
- */
 public class AppointmentService {
 
     private final AppointmentDao appointmentDao;
