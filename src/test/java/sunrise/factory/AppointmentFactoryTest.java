@@ -10,14 +10,6 @@ import java.time.LocalTime;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * Task C: unit tests written following a test-driven approach - each of
- * these captures a rule the factory must enforce, following Red-Green-
- * Refactor: the test was written first to describe the expected
- * behaviour, then AppointmentFactory was implemented/adjusted until it
- * passed.
- */
 class AppointmentFactoryTest {
 
     private AppointmentFactory factory;
