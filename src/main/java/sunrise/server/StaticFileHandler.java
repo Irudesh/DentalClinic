@@ -9,11 +9,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-/**
- * Serves the plain HTML/CSS/JS frontend from the web/ directory. Kept
- * separate from the JSON API handlers so the two responsibilities
- * (serving pages vs. serving data) are clearly divided.
- */
 public class StaticFileHandler implements HttpHandler {
 
     private final Path webRoot = Paths.get("web");
