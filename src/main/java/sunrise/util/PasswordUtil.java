@@ -4,15 +4,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Minimal password hashing so that credentials are never stored in plain
- * text, without depending on any external library.
- *
- * Note (documented as a known limitation for the report): a single static
- * salt is used here for simplicity. In a production system each user
- * should have their own random salt, and a slower algorithm such as
- * bcrypt or PBKDF2 should be preferred over a single SHA-256 pass.
- */
 public final class PasswordUtil {
 
     private static final String SALT = "SunriseDentalClinic#2026";
